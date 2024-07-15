@@ -1,6 +1,9 @@
 import  {useEffect, useState } from 'react';
 import Options from '../src/components/Options/Options'
 import Feedback from '../src/components/Feedback/Feedback'
+import Description from './components/Description/Description';
+import Notification from './components/Notification/Notification';
+
 
 function App() {
   const [feedback, setFeedback] = useState(() => {
@@ -29,14 +32,17 @@ function App() {
 
   const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
 
+  const positivePercentage = Math.round((feedback.good/ totalFeedback) * 100);
+
+
   return (
     <div>
-      <h1>Feedback App</h1>
+     <Description />
       <Options updateFeedback={updateFeedback} resetFeedback={resetFeedback} total={totalFeedback}/>
       {totalFeedback > 0 ? (
-        <Feedback feedback={feedback} total={totalFeedback} />
+        <Feedback feedback={feedback} total={totalFeedback} positive_feedback={positivePercentage} />
       ) : (
-      <p>No feedback yet</p>
+        <Notification/>
       )}
     </div>
   );
